@@ -4,13 +4,13 @@ public class Conta {
 
 	private String numero;
 	private String digito;
-	private int saldo;
+	private Double saldo;
 
 	public Conta() {
 
 	}
 
-	public Conta(String numero, String digito, int saldo) {
+	public Conta(String numero, String digito, Double saldo) {
 		this.numero = numero;
 		this.digito = digito;
 		this.saldo = saldo;
@@ -32,11 +32,11 @@ public class Conta {
 		this.digito = digito;
 	}
 
-	public int getSaldo() {
+	public Double getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(int saldo) {
+	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
 

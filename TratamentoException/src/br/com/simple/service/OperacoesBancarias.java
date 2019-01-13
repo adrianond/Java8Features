@@ -5,8 +5,12 @@ import br.com.simple.model.Conta;
 
 public interface OperacoesBancarias {
 	
-	public void sacar() throws MinhaException;
+	public Double saldoContaPorCliente(Conta saldo, int qtd_clientes) throws MinhaException;
 	
-	public int saldoContaPorCliente(Conta saldo, int qtd_clientes) throws MinhaException;
+	public Double consultarSaldoContaCorrente(Conta conta) throws MinhaException;
+	
+	public Double efetuarSaqueContaCorrente(Conta conta, int valorSaque) throws MinhaException;
+	
+	public Double efetuarDepositoContaCorrente (Conta conta, int valorDeposito) throws MinhaException;
 
 }

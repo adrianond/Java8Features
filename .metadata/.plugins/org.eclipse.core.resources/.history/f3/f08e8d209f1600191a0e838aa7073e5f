@@ -1,0 +1,72 @@
+package stream.simple;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import stream.simple.model.Funcionario;
+
+public class StreamFunctions {
+	
+	/**
+	 * Converte a lista em um stream para usar o método filter e converte novamente em uma lista
+	 * @param funcionarios
+	 * @return
+	 */
+	public List<Funcionario> filtarFuncByName(List<Funcionario> funcionarios) {
+		
+		Stream<Funcionario> streamFunc = funcionarios.stream();
+		List<Funcionario> listFuncionarios = streamFunc.filter(f -> f.getNome()
+				//startsWith é case sensitive
+				.startsWith("A"))
+				//Collectors converter o stream em uma lista
+                 .collect(Collectors.toList());
+		
+		return listFuncionarios;
+		
+	}
+	
+	/**
+	 * Retorna a soma das idades dos funcionarios que temham o nome iniciado pela letra 'A'
+	 * @param funcionarios
+	 * @return
+	 */
+	public int filtarFuncByNameSomarIdade(List<Funcionario> funcionarios) {
+		
+		Stream<Funcionario> streamFunc = funcionarios.stream();
+		Integer somaIdade = streamFunc.filter(f -> f.getNome()
+				 .startsWith("A"))
+				 .mapToInt(f -> Integer.valueOf(f.getIdade())).sum();
+		
+		return somaIdade;
+		
+	}
+	
+	/**
+	 * A Stream API fornece um recurso interessante quando temos que filtrar grandes volumes de dados em uma coleção. 
+	 * A fim de ganharmos em desempenho essa filtragem pode ser feita de forma paralela
+	 * @param funcionarios
+	 * @return
+	 */
+	public void filtarFuncByNameSomarIdadeProcessoParalelo(List<Funcionario> funcionarios) {
+		long t1, t2;
+		
+		Stream<Funcionario> streamFunc = funcionarios.parallelStream();
+		Integer somaIdade = streamFunc.filter(f -> f.getNome()
+				 .startsWith("A"))
+				 .mapToInt(f -> Integer.valueOf(f.getIdade())).sum();
+		
+		 /***** Here We Are Creating A 'Sequential Stream' & Displaying The Result *****/
+		
+		        t1 = System.currentTimeMillis();   
+		
+		        System.out.println("Sequential Stream Count?= " + eList.stream().filter(e -> e.getSalary() > 15000).count());
+
+		
+		System.out.println("Vai executar processo paralelo");
+		
+		System.out.println("A soma das idades dos funcionarios que tem o nome iniciado pela letra A é : " + somaIdade);
+		
+	}
+
+}

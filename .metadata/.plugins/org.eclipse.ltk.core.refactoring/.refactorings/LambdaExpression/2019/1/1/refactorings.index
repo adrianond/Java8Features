@@ -1,0 +1,8 @@
+1546618246429	Rename type 'ClasseInterna'
+1546619962923	Rename type 'CalculadoraInterface'
+1546621719589	Move compilation unit
+1546621797232	Move compilation unit
+1546622332104	Rename package 'dantas.adriano.lambda.expression'
+1546622489000	Delete element
+1546622609582	Rename type 'Calculadora'
+1546648713992	Extract method 'consultarFuncionariosCadastrados'

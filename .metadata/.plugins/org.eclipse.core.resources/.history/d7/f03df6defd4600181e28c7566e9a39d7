@@ -1,0 +1,33 @@
+package br.com.tratar.excecao;
+
+public class MinhaException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String menssagem;
+	private String value;
+
+	public MinhaException(String menssagem, String value) {
+		this.menssagem = menssagem;
+		this.value = value;
+	}
+
+	public String getMenssagem() {
+		return menssagem;
+	}
+
+	public void setMenssagem(String menssagem) {
+		this.menssagem = menssagem;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+}

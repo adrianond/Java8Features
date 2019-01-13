@@ -1,0 +1,5 @@
+package stream.simple.model;
+
+public class Pessoa {
+
+}

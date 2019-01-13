@@ -1,0 +1,87 @@
+package br.com.dantas.adriano.collections.map;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import br.com.dantas.adriano.model.Funcionario;
+
+/**
+ * 
+ * @author nss_admin
+ *
+ */
+public class UsingMap {
+
+	public static void main(String[] args) {
+		hashMap();
+
+	}
+
+	private static void hashMap() {
+		apenasString();
+		objetoFuncionario();
+	}
+
+	private static void objetoFuncionario() {
+		//Chaves repetidas não são inseridas no mapa
+		Map<String, Funcionario> mapa = new HashMap<>();
+		mapa.put("func1", new Funcionario("10", "23/04/2017"));
+		mapa.put("func1", new Funcionario("10", "23/04/2017"));
+		mapa.put("func1", new Funcionario("10", "23/04/2017"));
+		mapa.put("func2", new Funcionario("12", "22/05/2018"));
+		mapa.put("func1", new Funcionario("99", "01/02/2010"));
+		mapa.put("func2", new Funcionario("12", "22/05/2018"));
+		mapa.put("func3", new Funcionario("12", "22/05/2018"));
+		
+		mapa.forEach((k, v) -> {
+			System.out.println("Mapa de funciários:" + "chave:" + k + " " + "ID: " + v.getIdFunc() + " " + "DT_Admissão: " + v.getData_Admissao());
+		});
+	}
+
+	private static void apenasString() {
+		
+		System.out.println("Percorre o HashMap de String");
+		Map<String, String> mapa = new HashMap<>();
+		mapa.put("nome", "adriano");
+		mapa.put("sobreNome", "dantas");
+		mapa.put("endreco", "Palmeiras 59");
+		mapa.put("bairro", "Jaguare");
+		mapa.put("bairro", "Jaguare");
+
+		for (Map.Entry<String, String> teste : mapa.entrySet()) {
+			System.out.println("chave : " + teste.getKey());
+			System.out.println("valor :" + teste.getValue());
+		}
+		
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("Percorre o HashMap de String com forEach");
+		mapa.forEach((k, v) -> {
+			System.out.println(k + " " +  v);
+		});
+		
+		System.out.println("--------------------------------------------------------------------------------");
+		//Chaves repetidas não são inseridas no mapa  -> Com iterator posso retirar todos os repetidos do mapa, mas será exluidos todos esses elementos repetidos 
+		Map<String, String> map = new HashMap<>();
+		map.put("nome", "adriano");
+		map.put("sobreNome", "dantas");
+		map.put("endreco", "Palmeiras 59");
+		map.put("bairro", "Jaguare");
+		map.put("bairro", "Jaguare");
+		map.put("sobreNomeAtual", "dantas");
+		map.put("sobreNomeAtual2", "dantas");
+
+		Iterator<String> it = map.keySet().iterator();
+		System.out.println("Mapa não insere chaves iguais: " + map);
+		System.out.println("--------------------------------------------------------------------------------");
+		while (it.hasNext()) {
+			String key = it.next();
+			if ("dantas".equals(map.get(key))) {
+				it.remove();
+			}
+		}
+		System.out.println("Imprime o mapa após retirados os valores reptidos com chaves diferentes");
+		System.out.println(map);
+		System.out.println("--------------------------------------------------------------------------------");
+	}
+
+}

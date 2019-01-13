@@ -4,28 +4,51 @@ import br.com.simple.exceptions.MinhaException;
 import br.com.simple.model.Conta;
 
 public class OperacoesBancariasImpl implements OperacoesBancarias {
-
-	@Override
-	public void sacar() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	/**
 	 * a partir do java 7, podemos tratar mais de um tipo de exceção do mesmo
 	 * cacth (Multicatch), nesse caso ArithmeticException ou
 	 * NullPointerException
 	 */
-	public int saldoContaPorCliente(Conta conta, int qtd_clientes) throws MinhaException{
+	public Double saldoContaPorCliente(Conta conta, int qtd_clientes) throws MinhaException{
 
-		int saldoPorCliente = 0;
+		Integer saldoPorCliente = 0;
+		Double saldoFinal = 0.0;
 		try {
-			saldoPorCliente = conta.getSaldo() / qtd_clientes;
-
+			Integer saldo = conta.getSaldo().intValue();
+			saldoPorCliente = saldo / qtd_clientes;
+			saldoFinal = saldoPorCliente.doubleValue();
 		} catch (ArithmeticException | NullPointerException e) {
 			throw new MinhaException("Erro em: [OperacoesBancariasImpl.saldoContaPorCliente method] ", e.getCause() + " " + e.getMessage());
 		}
-		return saldoPorCliente;
+		return saldoFinal;
+	}
+
+	
+	public Double consultarSaldoContaCorrente(Conta conta) throws MinhaException {
+		
+		return conta.getSaldo();
+	}
+
+	public Double efetuarSaqueContaCorrente(Conta conta, int valorSaque) throws MinhaException {
+		
+		Integer saldo = conta.getSaldo().intValue();
+		 
+		 if(valorSaque > saldo) {
+			 throw new MinhaException("Erro em: [OperacoesBancariasImpl.efetuarSaqueContaCorrente method] ", "Saldo Insuficiente");
+		 } else {
+			 saldo = saldo - valorSaque;
+			 conta.setSaldo(saldo.doubleValue());
+		 }
+		return conta.getSaldo();
+	}
+
+	public Double efetuarDepositoContaCorrente(Conta conta, int valorDeposito) throws MinhaException {
+
+		Integer saldo = conta.getSaldo().intValue() + valorDeposito;
+		conta.setSaldo(saldo.doubleValue());
+		
+		return conta.getSaldo();
 	}
 
 }

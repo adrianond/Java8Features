@@ -1,0 +1,12 @@
+package br.com.dantas.adriano.collections.set;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class UsingMap {
+	
+	
+	Map<String, String> mapa = new HashMap<>();
+	
+
+}

@@ -1,0 +1,57 @@
+package dantas.adriano.lambda.expression.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import dantas.adriano.lambda.expression.service.ConsultarCadastroFuncionario;
+import dantas.adriano.model.Funcionario;
+
+/**
+ * Implementando interface funcional sem usar lambda expression
+ * @author 660454
+ *
+ */
+public class ConsultarCadastroFuncionarioImpl2 implements ConsultarCadastroFuncionario {
+	
+	static List<Funcionario> lista = new ArrayList<>();
+	public static void main(String[] args) {
+		
+		ConsultarCadastroFuncionarioImpl2 consultar = new ConsultarCadastroFuncionarioImpl2();
+		
+		List<Funcionario> list = consultar.listarFuncionarios(consultarFuncionariosCadastrados());
+		
+		list.forEach(f -> {
+			System.out.println("Tamanho da lista: " + list.size());
+			System.out.println("Funcionario: " + f.getNome() + " " + "Idade: " + f.getIdade() + " " + "Cargo: " + f.getCargo());
+		});
+	}
+
+
+
+	private static Funcionario consultarFuncionariosCadastrados() {
+		Funcionario func = new Funcionario("Paulo", "42", "Gerente de Contas");
+		return func;
+	}
+
+	
+	//crio método para executar a lmabda expression
+	public List<Funcionario> listarFuncionarios(Funcionario func) {
+		return 	consultarCadastroFuncionario(func);
+	}
+
+
+
+	@Override
+	public List<Funcionario> consultarCadastroFuncionario(Funcionario func) {
+		lista.add(func);
+		return lista;
+	}
+
+
+
+	@Override
+	public List<Funcionario> consultarCadastroFuncionario2(Funcionario func) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

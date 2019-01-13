@@ -1,0 +1,93 @@
+package stream.simple;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import stream.simple.model.Funcionario;
+
+public class StreamFunctions {
+	
+	/**
+	 * Converte a lista em um stream para usar o método filter e converte novamente em uma lista
+	 * @param funcionarios
+	 * @return
+	 */
+	public List<Funcionario> filtarFuncByName(List<Funcionario> funcionarios) {
+		
+		Stream<Funcionario> streamFunc = funcionarios.stream();
+		List<Funcionario> listFuncionarios = streamFunc.filter(f -> f.getNome()
+				//startsWith é case sensitive
+				.startsWith("A"))
+				//Collectors converter o stream em uma lista
+                 .collect(Collectors.toList());
+		
+		return listFuncionarios;
+		
+	}
+	
+	/**
+	 * Retorna a soma das idades dos funcionarios que temham o nome iniciado pela letra 'A'
+	 * @param funcionarios
+	 * @return
+	 */
+	public int filtarFuncByNameSomarIdade(List<Funcionario> funcionarios) {
+		
+		Stream<Funcionario> streamFunc = funcionarios.stream();
+		Integer somaIdade = streamFunc.filter(f -> f.getNome()
+				 .startsWith("A"))
+				 .mapToInt(f -> Integer.valueOf(f.getIdade())).sum();
+		
+		return somaIdade;
+		
+	}
+	
+	/**
+	 * A Stream API fornece um recurso interessante quando temos que filtrar grandes volumes de dados em uma coleção. 
+	 * A fim de ganharmos em desempenho essa filtragem pode ser feita de forma paralela
+	 * @param funcionarios
+	 * @return
+	 */
+	public void filtarFuncByNameSomarIdadeProcessoParalelo(List<Funcionario> funcionarios) {
+		long t1, t2;
+		
+		t1 = System.currentTimeMillis();
+		Integer resultado = (int) funcionarios.stream().filter(f -> f.getNome()
+				 .startsWith("A"))
+				 .mapToInt(f -> Integer.valueOf(f.getIdade())).sum();
+		
+		t2 = System.currentTimeMillis();
+		System.out.println("Sequential Stream Time gasto no processamento: " + (t2-t1) + "\n");
+		System.out.println("Soma das idades dos funcionários com nome iniciados pela letra A é: " + resultado);
+		
+		System.out.println("-----------------------------------------------------------------------------------");
+		
+		t1 = System.currentTimeMillis();
+		Integer resultadoParalelo = (int) funcionarios.parallelStream().filter(f -> f.getNome()
+				 .startsWith("A"))
+				 .mapToInt(f -> Integer.valueOf(f.getIdade())).sum();
+		t2 = System.currentTimeMillis();
+		System.out.println("Parallel Stream Time gasto no processamento: " + (t2-t1) + "\n");
+		System.out.println("Soma das idades dos funcionários com nome iniciados pela letra A é: " + resultadoParalelo);
+	}
+	
+	
+	public void verificarMaiorMenorIdadeListaFuncionarios(List<Funcionario> consultarFuncionariosCadastrados) {
+		Stream<Funcionario> streamFunc = consultarFuncionariosCadastrados.stream();
+
+		Integer maiorIdade = streamFunc.mapToInt(f-> Integer.valueOf(f.getIdade())).max(). getAsInt();
+		Integer menorIdade = streamFunc.mapToInt(f -> Integer.valueOf(f.getIdade())).min().getAsInt();
+		
+		List<Funcionario> listFuncionarios = streamFunc.collect(Collectors.toList());
+		listFuncionarios.forEach(funcionario -> {
+			if(Integer.valueOf(funcionario.getIdade()) == maiorIdade) {
+				System.out.println("O funcionário : " + funcionario.getNome() + " " + "tem a maior idade: " + maiorIdade);
+			}
+            if(Integer.valueOf(funcionario.getIdade()) == menorIdade) {
+            	System.out.println("O funcionário : " + funcionario.getNome() + " " + "tem a menor idade: " + menorIdade);
+			}
+		});
+		
+	}
+
+}

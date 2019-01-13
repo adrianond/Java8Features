@@ -1,0 +1,18 @@
+package br.com.dantas.adriano.collections.set;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class UsingMap {
+	
+	public static void main(String[] args) {
+		Map<String, String> mapa = new HashMap<>();
+		mapa.put("nome", "adriano");
+		mapa.put("sobreNome", "dantas");
+		mapa.put("endreco", "Palmeiras 59");
+		mapa.put("bairro", "Jaguare");
+	}
+	
+	
+
+}

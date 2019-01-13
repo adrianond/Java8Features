@@ -1,0 +1,32 @@
+package br.com.tratar.excecao;
+
+public class Teste {
+
+	public static void main(String[] args) throws MinhaException {
+		
+		try {
+			tratarException();
+		} catch (MinhaException e) {
+			 System.out.println("Erro no acesso ao vetor " + e.getName());
+		}
+
+	}
+
+	static void tratarException() throws MinhaException{
+
+		int i = 0;
+		String frases[] = { "um", "dois", "tres" };
+
+		try {
+			while (i < 4) {
+				System.out.println(frases[i]);
+				i++;
+			}
+		} catch (Exception e) {
+			throw new MinhaException(" Erro no metodo main ", "Erro no contador");
+			// System.out.println("Erro no acesso ao vetor" + e.getCause());
+		}
+
+	}
+
+}

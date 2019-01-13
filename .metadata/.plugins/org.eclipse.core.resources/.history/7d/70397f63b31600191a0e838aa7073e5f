@@ -1,0 +1,122 @@
+package stream.simple.teste;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import stream.simple.StreamFunctions;
+import stream.simple.model.Funcionario;
+
+public class StreamFunctionTeste {
+	
+	public static void main(String[] args) {
+		
+		StreamFunctions stream = new StreamFunctions();
+		
+		//filtarFuncPelaInicialNome(stream);
+		//somarIdadeFuncionarios(stream);
+		//somarIdadeFuncionariosEmProcessoParalalo(stream);
+		//verificarMaiorMenorIdadeListaFuncionarios(stream);
+		//retonarMediaIdadeFuncionarios(stream);
+        retornaMapaComListaFuncionariosComMesmaIdade(stream);
+        retornaOptional(stream);
+		
+	}
+
+	private static void retornaOptional(StreamFunctions stream) {
+		Map<String, List<Funcionario>> mapa = stream.retornaMapaFuncionarios(consultarFuncionariosCadastrados3());
+		
+	}
+
+	private static void retornaMapaComListaFuncionariosComMesmaIdade(StreamFunctions stream) {
+		Map<String, List<Funcionario>> mapa = stream.retornaMapaFuncionarios(consultarFuncionariosCadastrados3());
+		
+		List<Funcionario> lista  = mapa.get("24");
+		lista.forEach(funcionario -> {
+			 System.out.println("Idade do funcionário : " + funcionario.getNome() + " " + "é : " + funcionario.getIdade());
+		});
+		System.out.println("-----------------------------------------------------------------------------------------");
+		
+		mapa.forEach((k, v) -> {
+			 System.out.println("A chave : " + k + " " + "contém uma lista de funcionários com a mesma idade");
+			 //listas de funcionários com a mesma idade
+			 v.forEach(f -> {
+				 System.out.println("Idade do funcionário : " + f.getNome() + " " + "é : " + f.getIdade());
+			 });
+		});
+		      
+	}
+
+	private static void retonarMediaIdadeFuncionarios(StreamFunctions stream) {
+		double mediaIdade = stream.verificarMediaIdadeFunc(consultarFuncionariosCadastrados());
+		System.out.println("Média de idade dos funcionários é: " + mediaIdade);
+		
+	}
+
+	private static void verificarMaiorMenorIdadeListaFuncionarios(StreamFunctions stream) {
+		
+		int maiorIdade = stream.verificarMaiorIdadeListaFuncionarios(consultarFuncionariosCadastrados());
+		int menorIdade = stream.verificarMenorIdadeListaFuncionarios(consultarFuncionariosCadastrados());
+		
+		stream.verificarMaiorMenorIdadeListaFuncionarios(consultarFuncionariosCadastrados(), maiorIdade, menorIdade);
+		
+	}
+
+	private static void somarIdadeFuncionariosEmProcessoParalalo(StreamFunctions stream) {
+		 stream.filtarFuncByNameSomarIdadeProcessoParalelo(consultarFuncionariosCadastrados2());
+	}
+
+	private static void somarIdadeFuncionarios(StreamFunctions stream) {
+        int resultado = stream.filtarFuncByNameSomarIdade(consultarFuncionariosCadastrados());
+        System.out.println("Soma das idades dos funcionários com nome iniciados pela letra A é: " + resultado);
+	}
+
+	private static void filtarFuncPelaInicialNome(StreamFunctions stream) {
+		List<Funcionario> listaRetorno = stream.filtarFuncByName(consultarFuncionariosCadastrados());
+		
+		listaRetorno.forEach(f -> {
+			System.out.println("Nome: " + f.getNome());
+		});
+	}
+	
+	private static List<Funcionario> consultarFuncionariosCadastrados() {
+		Funcionario paulo = new Funcionario("Paulo", "42", "Gerente de Contas");
+		Funcionario ricardo = new Funcionario("Ricardo", "62", "Gerente de Planejamento");
+		Funcionario lenadro = new Funcionario("Leandro", "32", "Gerente Executivo");
+		Funcionario adriano = new Funcionario("Adriano", "30", "Gerente Executivo");
+		Funcionario adalto = new Funcionario("Adalto", "24", "Gerente de pessoas");
+		
+		List<Funcionario> lista = Arrays.asList(paulo, ricardo, lenadro, adriano, adalto);
+		return lista;
+	}
+	
+	private static List<Funcionario> consultarFuncionariosCadastrados2() {
+		
+		List<Funcionario> lista = null; 
+		
+		for(int i =0; i < 300; i++) {
+			Funcionario paulo = new Funcionario("Paulo", "42", "Gerente de Contas");
+			Funcionario ricardo = new Funcionario("Ricardo", "62", "Gerente de Planejamento");
+			Funcionario lenadro = new Funcionario("Leandro", "32", "Gerente Executivo");
+			Funcionario adriano = new Funcionario("Adriano", "30", "Gerente Executivo");
+			Funcionario adalto = new Funcionario("Adalto", "24", "Gerente de pessoas");
+			lista = Arrays.asList(paulo, ricardo, lenadro, adriano, adalto);
+		}
+		return lista;
+	}
+	
+	private static List<Funcionario> consultarFuncionariosCadastrados3() {
+		Funcionario paulo = new Funcionario("Paulo", "42", "Gerente de Contas");
+		Funcionario ricardo = new Funcionario("Ricardo", "62", "Gerente de Planejamento");
+		Funcionario lenadro = new Funcionario("Leandro", "32", "Gerente Executivo");
+		Funcionario adriano = new Funcionario("Adriano", "30", "Gerente Executivo");
+		Funcionario adalto = new Funcionario("Adalto", "24", "Gerente de pessoas");
+		Funcionario guilherme = new Funcionario("Guilherme", "24", "Gerente de pessoas");
+		Funcionario joao = new Funcionario("Joao", "24", "Gerente de pessoas");
+		Funcionario pedro = new Funcionario("Pedro", "24", "Gerente de pessoas");
+		
+		List<Funcionario> lista = Arrays.asList(paulo, ricardo, lenadro, adriano, adalto, guilherme, joao, pedro);
+		return lista;
+	}
+
+}
